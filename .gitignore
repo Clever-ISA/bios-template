@@ -1,0 +1,6 @@
+*.o
+bios
+bios.elf
+bios.dbg
+!machine-specific/README
+machine-specific/*
