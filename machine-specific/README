@@ -1,0 +1,10 @@
+This folder contains machine-specific assembly and object files, when specific machines may need or want special configuration.
+
+It is normally not checked out to git. 
+
+If you are maintaining a fork of this repository for a particular machine or a particular group of machines, 
+ you can remove the `machine-specific/*` line from `.gitignore` in the repository root.
+
+
+If you cloned this repository from a fork, then this folder may contain source files that are owned by the maintainer of the fork. 
+These source files may not be covered by the main repository license.

@@ -5,6 +5,12 @@ SECTIONS {
         main.o(.rodata.interrupt);
     };
 
+    .rodata.enumerate: ALIGN(16){
+        __begin_enumerate_drives = .;
+        KEEP(*(.rodata.enumerate));
+        __end_enumerate_drives = .;
+    }
+
     .rodata: ALIGN(16) {
         *(.rodata);
         __END_RODATA = .;
@@ -22,6 +28,7 @@ SECTIONS {
         main.o(.text.init);
         machine-specific/*.o(.text.init);
         __END_TEXT_INIT = .;
+        . = 0xffff;
     };
 
     .bss: 0x10000{
