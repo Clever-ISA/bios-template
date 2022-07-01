@@ -1,6 +1,10 @@
 
 .global begin_boot
 
+.rodata
+boot_error:
+.ascii "No bootable Device Found. Resetting"
+
 .text
 
 begin_boot:
@@ -18,12 +22,33 @@ begin_boot:
     begin_boot._L1:
     mov r13, r0
     lea r12, [__block_array+ip]
-    
+    begin_boot._L2:
+    mov r0, [r12]
+    mov r2, [r12+8]
+    test r2, 0xff00000000000000
+    je begin_boot._L3
+    mov r1, single 0x1000000
+    mov r3, 0x200
+    icall r0
+    mov r, [r12+8]
+    mov r0, short [0x100001FE]
+    test r0, short 0x55AA
+    je 0x1000000
+    lea r12, [r12+16]
+    jmp begin_boot._L2
+    begin_boot._L3:
+    lea r0, __machine_serial_write
+    test r0, r0
+    je begin_boot._L4
+    lea r0, 
+    begin_boot._L4:
+    mov double [half 0], short 0
+    und0 // No software reset yet, so nuke the itab and execute an illegal instruction to reset the processor
 
 
 .bss
 // Array Elements:
-// void (*read)(void*, size_t);
+// void (*read)(uint64_t, void*, size_t);
 // uint64_t id;
 __block_array:
 .space 4096

@@ -55,7 +55,6 @@ _start:
     jmp _start._L0
 
 .section .bss
+.space 8192
 stack:
-.space 4096
-
 
