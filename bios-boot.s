@@ -25,7 +25,7 @@ begin_boot:
     begin_boot._L2:
     mov r0, [r12]
     mov r2, [r12+8]
-    test r2, 0xff00000000000000
+    test r2, 0xffff000000000000
     je begin_boot._L3
     mov r1, single 0x1000000
     mov r3, 0x200
