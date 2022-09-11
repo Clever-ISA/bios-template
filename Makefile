@@ -10,7 +10,7 @@ STRIP := $(TARGET)-strip
 
 
 
-BIOS_DRIVERS := pci ahci acpi ata gpio usb
+BIOS_DRIVERS := pci ahci acpi spi usb
 
 USE_EFI := no
 
@@ -18,7 +18,7 @@ EFI_DRIVERS := fat32 pe
 
 MS_OBJS := $(patsubst %.s,%.o,$(wildcard machine-specific/*.s))
 
-BIOS_OBJS := main.o mbr.o $(foreach bios_driver,$(BIOS_DRIVERS),$(BIOS_DRIVER).o)
+BIOS_OBJS := main.o $(foreach bios_driver,$(BIOS_DRIVERS),$(BIOS_DRIVER).o)
 
 EFI_OBJS := efi/main.o efi/boot-services.o efi/run-services.o $(foreach efi_driver,$(EFI_DRIVERS),efi/$(EFI_DRIVERS).o)
 

@@ -1,6 +1,6 @@
 .section .rodata.interrupt
 itable: // addr 0x0000
-.quad 64, 0,
+.quad 64, 0
 .quad 0, 0
 .quad abort, 0x18000
 .quad 0, 0
@@ -11,6 +11,8 @@ itable: // addr 0x0000
 .section .text
 
 .global _start
+
+.weak __machine_init
 
 abort:
 undefined:
@@ -27,7 +29,7 @@ undefined:
 _start:
     mov r7, half stack+ip
     mov cr6, short itable
-    lea r0 , [__machine_init+ip]
+    lea r0, [__machine_init]
     cmp r0, 0
     jeq _start._L0
     call rel __machine_init

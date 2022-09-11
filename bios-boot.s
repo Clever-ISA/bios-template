@@ -1,6 +1,8 @@
 
 .global begin_boot
 
+.weak __machine_serial_read __machine_serial_write
+
 .rodata
 boot_error:
 .ascii "No bootable Device Found. Resetting"
@@ -30,8 +32,8 @@ begin_boot:
     mov r1, single 0x1000000
     mov r3, 0x200
     icall r0
-    mov r, [r12+8]
-    mov r0, short [0x100001FE]
+    mov r12, [r12+8]
+    mov r0, half [0x100001FE]
     test r0, short 0x55AA
     je 0x1000000
     lea r12, [r12+16]
@@ -40,10 +42,18 @@ begin_boot:
     lea r0, __machine_serial_write
     test r0, r0
     je begin_boot._L4
-    lea r0, 
+    lea r5, [boot_error]
+    mov r4, 32
+    call __machine_serial_write
+    lea r0, __machine_serial_read
+    test r0, r0
+    je begin_boot._L4
+    lea r5, [r7]
+    mov r4, 1
+    call __machine_serial_read
     begin_boot._L4:
     mov double [half 0], short 0
-    und0 // No software reset yet, so nuke the itab and execute an illegal instruction to reset the processor
+    und // No software reset yet, so nuke the itab and execute an illegal instruction to reset the processor
 
 
 .bss
