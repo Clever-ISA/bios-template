@@ -1,39 +1,38 @@
 ENTRY(_start)
 SECTIONS {
-    .rodata.interrupt: 0 {
+    .rodata.interrupt 0:  {
         __BEGIN_RODATA = .;
         main.o(.rodata.interrupt);
-    };
+    }
 
-    .rodata.enumerate: ALIGN(16){
+    .rodata.enumerate ALIGN(16) :{
         __begin_enumerate_drives = .;
         KEEP(*(.rodata.enumerate));
         __end_enumerate_drives = .;
     }
 
-    .rodata: ALIGN(16) {
+    .rodata  ALIGN(16): {
         *(.rodata);
         __END_RODATA = .;
-    };
+    }
 
-    .text: ALIGN(16){
+    .text ALIGN(1024): {
         __BEGIN_TEXT = .;
         *(.text);
         __END_TEXT = .;
-    };
+    }
 
 
-    .text.init: 0xff00{
+    .text.init 0xff00: {
         __BEGIN_TEXT_INIT = .;
-        main.o(.text.init);
-        machine-specific/*.o(.text.init);
+        KEEP(main.o(.text.init));
         __END_TEXT_INIT = .;
-        . = 0xffff;
-    };
+        . = ABSOLUTE(0xffff);
+    }
 
-    .bss: 0x10000{
+    .bss 0x10000:{
         __BEGIN_BSS = .;
         *(.bss);
         __END_BSS = .;
-    };
+    }
 }
