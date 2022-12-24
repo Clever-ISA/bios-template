@@ -1,9 +1,15 @@
 ENTRY(_start)
+
+PHDRS {
+    text PT_LOAD;
+    data PT_LOAD;
+}
+
 SECTIONS {
     .rodata.interrupt 0:  {
         __BEGIN_RODATA = .;
         main.o(.rodata.interrupt);
-    }
+    } :text
 
     .rodata.enumerate ALIGN(16) :{
         __begin_enumerate_drives = .;
@@ -33,6 +39,7 @@ SECTIONS {
     .bss 0x10000:{
         __BEGIN_BSS = .;
         *(.bss);
+        *(COMMON);
         __END_BSS = .;
-    }
+    } :data
 }
