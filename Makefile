@@ -8,6 +8,8 @@ LD := $(TARGET)-ld
 OBJCOPY := $(TARGET)-objcopy
 STRIP := $(TARGET)-strip
 
+# Can be overriden to use an external machine-specific dir if using a submodule
+MACHINE_DIR := machine-specific/
 
 
 BIOS_DRIVERS := 
@@ -16,7 +18,7 @@ USE_EFI := no
 
 EFI_DRIVERS := fat32 pe 
 
-MS_OBJS := $(patsubst %.s,%.o,$(wildcard machine-specific/*.s))
+MS_OBJS := $(patsubst %.s,%.o,$(wildcard $(MACHINE_DIR)/*.s))
 
 BIOS_OBJS := main.o $(foreach bios_driver,$(BIOS_DRIVERS),$(bios_driver).o)
 
