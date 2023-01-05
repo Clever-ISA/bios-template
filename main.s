@@ -28,7 +28,7 @@ undefined:
 .section .text.init
 _start:
     mov r7, half stack+ip
-    mov cr6, short itable
+    mov cr6, half abs itable
     lea r0, [__machine_init]
     cmp r0, 0
     jeq _start._L0
