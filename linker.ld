@@ -33,7 +33,8 @@ SECTIONS {
         __BEGIN_TEXT_INIT = .;
         KEEP(main.o(.text.init));
         __END_TEXT_INIT = .;
-        . = ABSOLUTE(0xffff);
+        . = ABSOLUTE(0xFFFF);
+        BYTE(0);
     }
 
     .bss 0x10000:{
